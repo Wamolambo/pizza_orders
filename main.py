@@ -1,52 +1,80 @@
-import yaml
-import psycopg
+import utils.db as config
+import pandas
 
 
-def get_credentials() -> dict:
-    '''
-    description: Read database connection data from .yaml file
-    Retruns:    dictionary
-    '''
-    try:
-        with open(file='config.yml',mode="r") as f:
-            configs = yaml.safe_load(f) # safe_load instead read
-            return configs
+def create_tables():
+    # Create connection to database
+    connection = config.database_connection()
+    cursor = connection.cursor()
 
-            
-    except:
-        print('failed to read config file')
-    finally:
-        f.close()
+    # Exceute schema file
+    with open('db/schema.sql') as file:
+        query = file.read()
+        cursor.execute(query)
 
-
-def database_connection():
-    '''
-        description: Connect to Postgres Database
-    '''
-
-    # Call get_credentials
-    credentials = get_credentials()
-
-    # Get credentials from dict
-    host_name = credentials['database']['host_name']
-    user_name = credentials['database']['user_name']
-    user_password = credentials['database']['user_password']
-    databse_name = credentials['database']['databse_name']
-    port = credentials['database']['port']
+    connection.commit()
+    cursor.close()
+    connection.close()
 
 
 
-    try:
-        conn = psycopg.connect( user='postgres',
-                                password='admin',
-                                host='localhost',
-                                port=port)
-        
-        
-        print("Database connection pass")
-        return conn
-    except:
-        print("Database connection fail")
-    
+create_tables()
 
-conn = database_connection()
+
+# if __name__ == "__main___":
+#     import sys
+
+#     # if sys.argv[1] == "init":
+#     #     init_db()
+
+#     # Create connection to database
+#     connection = config.database_connection()
+#     cursor = connection.cursor()
+
+#     # Exceute schema file
+#     with open('db/schema.sql') as file:
+#         query = file.read()
+
+#         cursor.execute(query)
+
+#     connection.commit()
+#     cursor.close()
+#     connection.close()
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # # conn = database_connection()
+
+# # conn.cursor
+
+# # Call get_credentials
+# credentials = config.get_credentials()
+
+
+
+# customer_path = credentials['paths']['customers']
+
+# df = pandas.read_csv(customer_path)
+
+# print(df.head(5))
+
+
+
+
+
+
+#     # host_name = credentials['database']['host_name']
+#     # user_name = credentials['database']['user_name']
+#     # user_password = credentials['database']['user_password']
+#     # databse_name = credentials['database']['databse_name']
+#     # port = credentials['database']['port']
