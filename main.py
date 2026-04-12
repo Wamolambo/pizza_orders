@@ -33,12 +33,14 @@ if __name__=="__main__":
     # Initialise database
     #create_tables()
 
-    # Extract Dataframes from stored files
+    # Extract DataFrames from stored files
     customer_df, order_items_df, orders_df = extract.extract_order_data()
 
+    # Transform DataFrames
     customer_clean = transform.transform_customers(customer_df)
+    order_items_clean = transform.transform_order_items(order_items_df)
 
-    print(customer_clean)
+    print(order_items_clean.head(30))
 
     
 
