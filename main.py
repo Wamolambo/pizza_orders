@@ -1,6 +1,7 @@
 import utils.db as config
 import etl.extract as extract
 import etl.transform as transform
+import etl.load as load
 import pandas as pd
 
 
@@ -31,61 +32,24 @@ def create_tables():
 if __name__=="__main__":
 
     # Initialise database
-    #create_tables()
+    create_tables()
 
     # Extract DataFrames from stored files
     customer_df, order_items_df, orders_df = extract.extract_order_data()
 
     # Transform DataFrames
     customer_clean = transform.transform_customers(customer_df)
-    order_items_clean = transform.transform_order_items(order_items_df)
     order_clean = transform.transform_order(orders_df,customer_clean)
+    order_items_clean = transform.transform_order_items(order_items_df,order_clean)
 
- 
-    print(order_items_clean.info())
+    # Load data to postgres
+    connection = config.database_connection()
+    load.copy_dataframe(connection,customer_clean,"customers")
+    load.copy_dataframe(connection,order_clean,"orders")
+    load.copy_dataframe(connection,order_items_clean,"order_items")
+
+    connection.commit()
+    connection.close()
     
 
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    # # conn = database_connection()
-
-# # conn.cursor
-
-# # Call get_credentials
-# credentials = config.get_credentials()
-
-
-
-# customer_path = credentials['paths']['customers']
-
-# df = pandas.read_csv(customer_path)
-
-# print(df.head(5))
-
-
-
-
-
-
-#     # host_name = credentials['database']['host_name']
-#     # user_name = credentials['database']['user_name']
-#     # user_password = credentials['database']['user_password']
-#     # databse_name = credentials['database']['databse_name']
-#     # port = credentials['database']['port']
+   
