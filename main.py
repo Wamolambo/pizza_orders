@@ -1,45 +1,45 @@
 import utils.db as config
+import etl.extract as extract
 import pandas
 
 
 def create_tables():
+    '''
+        description: Initialise and create tables in Postgres database
+    '''
     # Create connection to database
     connection = config.database_connection()
     cursor = connection.cursor()
 
-    # Exceute schema file
-    with open('db/schema.sql') as file:
-        query = file.read()
-        cursor.execute(query)
+    try:
 
-    connection.commit()
-    cursor.close()
-    connection.close()
+        # Exceute schema file
+        with open('db/schema.sql') as file:
+            query = file.read()
+            cursor.execute(query)
+    except connection.Error as e:
+        print('\nFailed to Initialise Database')
+        print('\nError in db/schema.sql ' + str(e))
+
+    finally:
+        connection.commit()
+        cursor.close()
+        connection.close()
+    
+
+if __name__=="__main__":
+
+    # Initialise database
+    #create_tables()
+
+    # Extract Dataframes from stored files
+    a,b,c = extract.extract_order_data()
+
+
+    print(c.head())
 
 
 
-create_tables()
-
-
-# if __name__ == "__main___":
-#     import sys
-
-#     # if sys.argv[1] == "init":
-#     #     init_db()
-
-#     # Create connection to database
-#     connection = config.database_connection()
-#     cursor = connection.cursor()
-
-#     # Exceute schema file
-#     with open('db/schema.sql') as file:
-#         query = file.read()
-
-#         cursor.execute(query)
-
-#     connection.commit()
-#     cursor.close()
-#     connection.close()
 
 
 
