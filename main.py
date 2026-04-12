@@ -1,5 +1,6 @@
 import utils.db as config
 import etl.extract as extract
+import etl.transform as transform
 import pandas
 
 
@@ -33,10 +34,17 @@ if __name__=="__main__":
     #create_tables()
 
     # Extract Dataframes from stored files
-    a,b,c = extract.extract_order_data()
+    customer_df, order_items_df, orders_df = extract.extract_order_data()
+
+    customer_clean = transform.transform_customers(customer_df)
+
+    print(customer_clean)
+
+    
 
 
-    print(c.head())
+
+    
 
 
 

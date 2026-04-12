@@ -1,7 +1,8 @@
 import utils.db as config
-import pandas
+import pandas as pd
 
-def extract_order_data():
+
+def extract_order_data() -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     '''
         descroption: Extract data from stored files
     '''
@@ -13,8 +14,8 @@ def extract_order_data():
     orders_path = config_paths['paths']['orders']
 
     # Read files into Dataframes
-    customer_df = pandas.read_csv(customer_path)
-    order_items_df = pandas.read_csv(order_items_path)
-    orders = pandas.read_json(orders_path, lines=True)
+    customer_df = pd.read_csv(customer_path)
+    order_items_df = pd.read_csv(order_items_path)
+    orders_df = pd.read_json(orders_path, lines=True)
 
-    return customer_df, order_items_df, orders
+    return customer_df, order_items_df, orders_df
