@@ -5,6 +5,9 @@
 DROP VIEW IF EXISTS order_summary;
 DROP VIEW IF EXISTS topn_customers;
 DROP VIEW IF EXISTS topn_skus;
+DROP VIEW IF EXISTS duplicate_customers;
+DROP VIEW IF EXISTS orders_missing_customers;
+
 DROP TABLE IF EXISTS order_items;
 DROP TABLE IF EXISTS orders;
 DROP TABLE IF EXISTS customers;
