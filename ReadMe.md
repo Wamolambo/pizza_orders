@@ -1,0 +1,4 @@
+
+```bash
+python main.py init
+```
