@@ -1,6 +1,9 @@
 import yaml
 import psycopg
+from utils.logger import get_logger
 
+# Initialise logger
+logger = get_logger()
 
 def get_credentials() -> dict:
     '''
@@ -8,6 +11,7 @@ def get_credentials() -> dict:
     Retruns:    dictionary
     '''
     try:
+        logger.info('Reading config file')
         with open(file='config.yml',mode="r") as f:
             configs = yaml.safe_load(f) # safe_load instead read
             
@@ -15,7 +19,7 @@ def get_credentials() -> dict:
 
             
     except yaml.error:
-        print('failed to read config file')
+        logger.error('failed to read config file')
     finally:
         f.close()
 
@@ -44,10 +48,10 @@ def database_connection():
                                 port=port)
         
         
-        print("Succeful Database Connection")
+        logger.info("Succeful Database Connection")
         return conn
     except:
-        print("Failed Database Connection")
+        logger.info("Failed Database Connection")
     
 
 

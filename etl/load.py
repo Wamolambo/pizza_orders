@@ -1,7 +1,13 @@
 import io
+from utils.logger import get_logger
+
+# Initialise logger
+logger = get_logger()
 
 def copy_dataframe(conn, df, table):
     """Load a pandas DataFrame into a PostgreSQL table using COPY"""
+
+    logger.info("Postgres load started")
 
     # Prepare the CSV buffer
     buffer = io.StringIO()
@@ -15,4 +21,4 @@ def copy_dataframe(conn, df, table):
             copy.write(buffer.read())
 
 
-print("Data loaded successfully!")
+    logger.info("Succesful Load data to PostgreSQL")

@@ -1,9 +1,18 @@
 import pandas as pd
+from utils.logger import get_logger
+
+# Initialise logger
+logger = get_logger()
+
 
 def transform_customers(df: pd.DataFrame) -> pd.DataFrame:
     '''
         description : Transform extracted customer data
     '''
+
+    logger.info("Transform customer data")
+
+
      # Normalize emails to lowercase
     df['email'] = df['email'].str.lower()
 
@@ -16,6 +25,8 @@ def transform_customers(df: pd.DataFrame) -> pd.DataFrame:
 
     # Replace NaN with empty string in country code
     df['country_code'] = df['country_code'].fillna(' ')
+
+    logger.info("Succesfuly Transformedd customer data")
     return df
 
 
@@ -24,13 +35,15 @@ def transform_order_items(df: pd.DataFrame, df2: pd.DataFrame) -> pd.DataFrame:
         description : Transform extracted order items data
     '''
 
+    logger.info("Transform order data")
+
     # Exclude non posetive unite price 
     df = df[(df['quantity'] > 0) & (df['unit_price'] > 0)]
 
     # Enforce FK to orders
     df = df[df['order_id'].isin(df2['order_id'])]
 
-
+    logger.info("Succesfuly Transformedd customer data")
     return df
 
 
@@ -38,6 +51,8 @@ def transform_order(df1: pd.DataFrame, df2: pd.DataFrame) -> pd.DataFrame:
     '''
         description : Transform extracted order data
     '''
+
+    logger.info("Transform order data")
 
     # Convert to datetime
     df1['order_ts'] = pd.to_datetime(df1['order_ts'], utc=True, errors='coerce')
@@ -54,5 +69,6 @@ def transform_order(df1: pd.DataFrame, df2: pd.DataFrame) -> pd.DataFrame:
     # Exclude orders referencing unknown customers
     df = df1[df1['customer_id'].isin(df2['customer_id'])]
 
+    logger.info("Succesfuly Transformedd order data")
 
     return df
