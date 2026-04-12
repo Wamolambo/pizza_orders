@@ -1,7 +1,7 @@
 import utils.db as config
 import etl.extract as extract
 import etl.transform as transform
-import pandas
+import pandas as pd
 
 
 def create_tables():
@@ -39,9 +39,10 @@ if __name__=="__main__":
     # Transform DataFrames
     customer_clean = transform.transform_customers(customer_df)
     order_items_clean = transform.transform_order_items(order_items_df)
+    order_clean = transform.transform_order(orders_df,customer_clean)
 
-    print(order_items_clean.head(30))
-
+ 
+    print(order_items_clean.info())
     
 
 
