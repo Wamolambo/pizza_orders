@@ -1,7 +1,4 @@
 -- 1. DROP TABLE and VIEWS
---	customers (Dimesion)
---	orders (Fact)
---	order_items (Fact)
 DROP VIEW IF EXISTS order_summary;
 DROP VIEW IF EXISTS topn_customers;
 DROP VIEW IF EXISTS topn_skus;
@@ -14,9 +11,6 @@ DROP TABLE IF EXISTS customers;
 
 
 -- 2. CREATE TABLES
--- customers (Dimesion)
---	orders (Fact)
-
 CREATE TABLE customers
 (
 	customer_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,

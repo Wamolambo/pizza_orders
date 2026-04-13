@@ -9,7 +9,7 @@ def extract_order_data() -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     '''
         descroption: Extract data from stored files
     '''
-    logger.info("Ingesting raw source data")
+    logger.info("Ingesting Started")
 
     # Get file paths from yaml config file
     config_paths = config.get_credentials()
@@ -22,6 +22,7 @@ def extract_order_data() -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     order_items_df = pd.read_csv(order_items_path)
     orders_df = pd.read_json(orders_path, lines=True)
 
-    logger.info("Ingestion succeful")
+    logger.info("Ingestion Completed")
+    logger.info(f"Ingestion summary: Customers = {len(customer_df)} Orders = {len(orders_df)} Order Items = {len(order_items_df)}")
 
     return customer_df, order_items_df, orders_df

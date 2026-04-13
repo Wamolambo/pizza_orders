@@ -24,7 +24,7 @@ def create_tables():
             query = file.read()
             cursor.execute(query)
     except connection.Error as e:
-        logger.info('\nFailed to Initialise Database')
+        logger.w('\nFailed to Initialise Database')
         print('\nError in db/schema.sql ' + str(e))
 
     finally:
@@ -42,7 +42,7 @@ if __name__=="__main__":
         create_tables()
         logger.info("Table Succesfuly Initialised")
     if sys.argv[1] == "run":
-        logger.info("IPipeline Started")
+        logger.info("Pipeline Started")
         
 
         # Extract DataFrames from stored files
@@ -62,7 +62,7 @@ if __name__=="__main__":
         connection.commit()
         connection.close()
 
-        logger.info("Pipeline Succescfully ran")
+        logger.info("Pipeline Completed")
 
 
    

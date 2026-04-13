@@ -37,7 +37,7 @@ FROM customers
 GROUP BY email
 HAVING COUNT(*) > 1;
 
--- 5. Orders referencing missing customers
+-- 5. - Orders beloning to non existant customers
 CREATE OR REPLACE VIEW orders_missing_customers AS
 SELECT
     o.order_id,

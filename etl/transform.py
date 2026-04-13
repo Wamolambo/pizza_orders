@@ -10,7 +10,7 @@ def transform_customers(df: pd.DataFrame) -> pd.DataFrame:
         description : Transform extracted customer data
     '''
 
-    logger.info("Transform customer data")
+    logger.info("Customer Transform Started")
 
 
      # Normalize emails to lowercase
@@ -26,7 +26,8 @@ def transform_customers(df: pd.DataFrame) -> pd.DataFrame:
     # Replace NaN with empty string in country code
     df['country_code'] = df['country_code'].fillna(' ')
 
-    logger.info("Succesfuly Transformedd customer data")
+    logger.info("Customer Transform Completed")
+    logger.info(f"Customer Transform = {len(df)}")
     return df
 
 
@@ -35,7 +36,7 @@ def transform_order_items(df: pd.DataFrame, df2: pd.DataFrame) -> pd.DataFrame:
         description : Transform extracted order items data
     '''
 
-    logger.info("Transform order data")
+    logger.info("Order Items Transform Started")
 
     # Exclude non posetive unite price 
     df = df[(df['quantity'] > 0) & (df['unit_price'] > 0)]
@@ -43,7 +44,8 @@ def transform_order_items(df: pd.DataFrame, df2: pd.DataFrame) -> pd.DataFrame:
     # Enforce FK to orders
     df = df[df['order_id'].isin(df2['order_id'])]
 
-    logger.info("Succesfuly Transformedd customer data")
+    logger.info("Order Items Transform Completed")
+    logger.info(f"Order Items Transform = {len(df)}")
     return df
 
 
@@ -52,7 +54,7 @@ def transform_order(df1: pd.DataFrame, df2: pd.DataFrame) -> pd.DataFrame:
         description : Transform extracted order data
     '''
 
-    logger.info("Transform order data")
+    logger.info("Orders Transform Started")
 
     # Convert to datetime
     df1['order_ts'] = pd.to_datetime(df1['order_ts'], utc=True, errors='coerce')
@@ -69,6 +71,7 @@ def transform_order(df1: pd.DataFrame, df2: pd.DataFrame) -> pd.DataFrame:
     # Exclude orders referencing unknown customers
     df = df1[df1['customer_id'].isin(df2['customer_id'])]
 
-    logger.info("Succesfuly Transformedd order data")
+    logger.info("Orders Transform Completed")
+    logger.info(f"Orders Transform = {len(df)}")
 
     return df
