@@ -105,10 +105,10 @@ After running the pipeline:
 
 ## Validation
 
-Validation
-
 The following select queries can be run in Postgress to validate that the data has moved from source to destination:
 
 `SELECT * FROM customers;`
+
 `SELECT * FROM orders;`
+
 `SELECT * FROM order_items;`
