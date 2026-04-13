@@ -1,45 +1,103 @@
 
-# Project Setup
+# Data Pipeline Project
 
-This document describe the setup and commands used to run the project on a local machine.
+## Overview
+
+This project simulates an end-to-end data pipeline that ingests raw customer, order, and order item data, applies validation and transformation logic, and loads the cleaned data into a PostgreSQL database. Analytical and data quality views are created for downstream analysis.
 
 
-# Prerequisites
+##  Prerequisites
 
-The following requirements are needed to run this project:
+Ensure the following are installed on your local machine:
 
-1. Ensure that python 3.10 is installed in your machine. You can check your python version using:
+### 1. Python 3.10+
+
+Check your version:
+
 ```
-python --version 
+python --version
 ```
 
-If python is not installed, run the following:
+If not installed, install as follows:
+
+#### Ubuntu/Linux
 
 ```
 sudo apt update
-sudo apt install python
+sudo apt install python3 python3-venv python3-pip
 ```
 
-2. Ensure Postgres is installed and configured to run database operations. The default database and schema will be used in this project.
-   Note: The database credentials and schema are in the config.yaml file in the root path
+#### Windows
+Download from: https://www.python.org/downloads/
 
 
+### 2. PostgreSQL
 
-# Setup Instructions
+Ensure PostgreSQL is installed and running.
+
+The default postrgres database is used in this exercise and the credentials to the database aare stored in ```config.yaml`` file.
+
+
+## Setup Instructions
 1. Clone the repository
 ```
-cd /root
 git clone https://github.com/Wamolambo/pizza_orders.git
 cd pizza_orders
 ```
 
 2. Create a virtual environment:
+
+On Linux
+
 ```
-python -m venv etl_env
-source etl_env/bin/activate 
+python3 -m venv etl_env source etl_env/bin/activate
+```
+
+On Windows Powershell
+```
+py -3.10 -m venv etl_env
+.\etl_env\Scripts\Activate.ps1
 ```
 
 3. Install dependencies
 ```
 pip install -r requirements.txt
 ```
+
+## Configuration
+
+Edit the config.yaml file to match your local database setup:
+
+```
+database:
+  host: localhost
+  port: 5432
+  dbname: orders_db
+  user: your_user
+  password: your_password
+```
+
+## Running the Pipeline
+
+### 1. Initialize database schema
+
+```
+python main.py init
+```
+
+### 2. Run the ETL pipeline
+
+```
+python main.py run
+```
+
+
+## Output
+After running the pipeline:
+
+- Data will be loaded into
+   - customers
+   - orders
+   - order_items
+- Logs will be available
+   - In the terminal
