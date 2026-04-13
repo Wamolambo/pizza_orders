@@ -48,7 +48,7 @@ def database_connection():
                                 port=port)
         
         
-        logger.info("Succeful Database Connection")
+        logger.info("Successful Database Connection")
         return conn
     except:
         logger.info("Failed Database Connection")
