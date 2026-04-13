@@ -44,6 +44,33 @@ pipeline/
 └── README.md               # Runtime logs
 ```
 
+### Extract
+
+The data sources a loaded into DataFrames by using the pandas library.
+
+### Transform
+
+The loaded DataFrames are standerdised and validated using rules. Each Dataframes is standerdized using different rules as shown below.
+
+- Customers
+    - Invalid emails are dropped.
+    - Emails standerdized by putting them into lower case.
+    - Duplicate emails are mitigigated by keeping the first occuring email and dropping the rest.
+
+- Orders
+    - A list us used to filter for acceptable status values.
+    - Invalid timestamps are dropped.
+    - Timestamps are converted into UTC time.
+
+- Order Items
+    - Records with non-posetive quantity or unit prices as dropped
+    - Records that do not refference an order are dropped.
+
+### Load
+
+After the DataFrames are transformed, they are loaded into thier repective Postgres tables. This is achieved by the `pyscopg
+
+
 ## Database Design
 
 The database is designed with the following requirements.
@@ -77,3 +104,10 @@ The image above shows the following relationships.
     - A single order can have multiple items and multiple items can be in one order.
     - The tables are linked by an `order_id` primary key.
 
+## SQL Analytics
+
+## Data Quality Monitoring
+
+## Trade-offs and Design Decisions
+
+## Logging
