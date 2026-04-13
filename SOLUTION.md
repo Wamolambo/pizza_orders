@@ -6,15 +6,24 @@ This project implements an end-to-end data pipeline that ingests raw data from .
 
 The system is illustrated as follows:
 
-<p align="center">
-  <img src="img/etl.png" alt="ETL process" width="1000" height="600">
+<p align="left">
+  <img src="img/etl.png" alt="ETL process" width="600" height=400">
 </p>
 
-## Project structure
+## Data Sources
 
-The pipeline code was written in a modular pattern so that it can be better maintain, exepended and debugged.
+There are three data sources used in this project and they are.
+- customer.csv
+- order_items.csv
+- orders.jsonl
 
-The file structure is illustrated below:
+The data sources can be found in the path `data/*` in this repo.
+
+## ETL Code structure
+
+The pipeline code is written in modules so it can be maintain, expended and debugged easily. 
+
+The codes files structure is shown below.
 
 ```
 pipeline/
@@ -34,3 +43,37 @@ pipeline/
 ├── pipeline.log          
 └── README.md               # Runtime logs
 ```
+
+## Database Design
+
+The database is designed with the following requirements.
+
+- Primary keys are used in all three tables to ensure records are unique.
+- Foreign keys keys are used to referential intergrity.
+- Emails must be normalised by making them lower case and enforcing uniqueness of emails through constrains.
+- Quantities and unit prices cannot be non posetive.
+- Constrains are used to prevent NULL values in some fields to prevent incomplete records.
+
+Based on the requirements, the database is designed using a star schema with one fact table and two dimension tables.
+- orders (fact)
+- customers (dimension)
+- order item (dimension)
+
+The table relationships are shown below.
+
+<p align="left">
+  <img src="img/erd.png" alt="ETL process" width="1000" height="300">
+</p>
+
+
+The image above shows the following relationships.
+- customers -> orders
+    - one to many
+    - A single customer can have multiple orders and multiple orders can belong to one customer.
+    - The customer table primary key `customer_id` links the order table by being a foreign key. 
+    - Enabling data quality checks using an anti-join pattern.
+- orders -> order item
+    - one to many
+    - A single order can have multiple items and multiple items can be in one order.
+    - The tables are linked by an `order_id` primary key.
+
