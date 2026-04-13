@@ -35,7 +35,7 @@ Download from: https://www.python.org/downloads/
 
 Ensure PostgreSQL is installed and running.
 
-The default postrgres database is used in this exercise and the credentials to the database aare stored in ```config.yaml`` file.
+The default postrgres database is used in this exercise and the credentials to the database are stored in `config.yaml` file.
 
 
 ## Setup Instructions
