@@ -120,8 +120,20 @@ The following views were created to analyse order matrics:
 - TopN Customer
     - Customers that have spent the most ordered by amount spent.
 
-    
+
 ## Data Quality Monitoring
+
+The following two views were created to ensure data quality is enforced.
+
+- Customer Duplicate
+    - It identifies duplicate customers.
+    - This is achieved this by counting the number of times an email occurs and exposing those that appear more than once.
+    - Expected behavour is that no records are exposes since the duplicate emails are dropped during transformation.
+
+- Orders beloning to non existant customers
+    - Identifies any orders that are not linked to a customer in the database.
+    - it achieves this by implementing an anti join pattern order overs and customers.
+    - The are not supposed to be any records returned because of the constrains enforced in the orders table.
 
 ## Trade-offs and Design Decisions
 
