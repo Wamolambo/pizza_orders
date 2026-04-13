@@ -68,7 +68,7 @@ The loaded DataFrames are standerdised and validated using rules. Each Dataframe
 
 ### Load
 
-After the DataFrames are transformed, they are loaded into thier repective Postgres tables. This is achieved by the `pyscopg
+After the DataFrames are transformed, they are loaded into thier repective Postgres tables. This is achieved by the `pyscopg` library that has a `COPY` command that enables DataFrame's to be iterativel loaded into Postgres.
 
 
 ## Database Design
@@ -106,6 +106,21 @@ The image above shows the following relationships.
 
 ## SQL Analytics
 
+The following views were created to analyse order matrics:
+
+- order summary
+    - Number of orders per day
+    - Revenue per day
+    - Average sales per day
+
+- TopN SKU's
+    - Total revenue generated per SKU.
+    - Total quantaty of items sold per SKU.
+
+- TopN Customer
+    - Customers that have spent the most ordered by amount spent.
+
+    
 ## Data Quality Monitoring
 
 ## Trade-offs and Design Decisions
