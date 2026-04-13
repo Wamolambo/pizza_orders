@@ -137,6 +137,20 @@ The following two views were created to ensure data quality is enforced.
 
 ## Trade-offs and Design Decisions
 
+In this project, the following descision were made.
+
+- Changing dimensions
+    - The tables were drop and created with every run using the `init` command.
+    - This was done to maintain data consistancy for demonstative purposes.
+    - The trade off is that data old data will be lost if the source data changes.
+    - In production systems, slow changing dimensions are best to be used expercially for the customers and order item tables.
+
+- Dropping Invalid Data
+    - Invalid data such as bad emails and orders without customers are filtered out.
+    - This keeps the pipeline clean.
+    - The trade off is that the dropped data could hold potential insight or incomplete order information that could manifest into a sale.
+    - Production systesms often log these type of invalid data into a seperate table that can be minded for insight at a later stage.
+
 ## Logging
 
 Logs are used to track steps and data transfer counts in the pipeline. 
