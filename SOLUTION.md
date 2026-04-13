@@ -138,3 +138,52 @@ The following two views were created to ensure data quality is enforced.
 ## Trade-offs and Design Decisions
 
 ## Logging
+
+Logs are used to track steps and data transfer counts in the pipeline. 
+
+They are structured as follows:
+
+- Timestamp
+- log type
+- pipeline name
+- description
+
+The logs are displayed on the terminal as well as being stored in a `pipeline.log` file in the root directory.
+
+An example of the terminal logs are shown below.
+
+```
+(venv) PS C:\sandbox\order_pipeline> python main.py init
+2026-04-13 22:22:16,742 | INFO | order_pipeline | Initialising tables
+2026-04-13 22:22:16,742 | INFO | order_pipeline | Reading config file
+2026-04-13 22:22:16,776 | INFO | order_pipeline | Succeful Database Connection
+2026-04-13 22:22:16,826 | INFO | order_pipeline | Table Succesfuly Initialised
+(venv) PS C:\sandbox\order_pipeline> python main.py run
+2026-04-13 22:22:27,165 | INFO | order_pipeline | Pipeline Started
+2026-04-13 22:22:27,165 | INFO | order_pipeline | Ingesting Started
+2026-04-13 22:22:27,165 | INFO | order_pipeline | Reading config file
+2026-04-13 22:22:27,172 | INFO | order_pipeline | Ingestion Completed
+2026-04-13 22:22:27,172 | INFO | order_pipeline | Ingestion summary: Customers = 6 Orders = 10 Order Items = 12
+2026-04-13 22:22:27,172 | INFO | order_pipeline | Customer Transform Started
+2026-04-13 22:22:27,174 | INFO | order_pipeline | Customer Transform Completed
+2026-04-13 22:22:27,174 | INFO | order_pipeline | Customer Transform = 4
+2026-04-13 22:22:27,175 | INFO | order_pipeline | Orders Transform Started
+2026-04-13 22:22:27,182 | INFO | order_pipeline | Orders Transform Completed
+2026-04-13 22:22:27,182 | INFO | order_pipeline | Orders Transform = 5
+2026-04-13 22:22:27,182 | INFO | order_pipeline | Order Items Transform Started
+2026-04-13 22:22:27,183 | INFO | order_pipeline | Order Items Transform Completed
+2026-04-13 22:22:27,183 | INFO | order_pipeline | Order Items Transform = 5
+2026-04-13 22:22:27,184 | INFO | order_pipeline | Reading config file
+2026-04-13 22:22:27,230 | INFO | order_pipeline | Succeful Database Connection
+2026-04-13 22:22:27,230 | INFO | order_pipeline | customers Load Started
+2026-04-13 22:22:27,233 | INFO | order_pipeline | customers Load Completed
+2026-04-13 22:22:27,234 | INFO | order_pipeline | Loaded 4 customers
+2026-04-13 22:22:27,234 | INFO | order_pipeline | orders Load Started
+2026-04-13 22:22:27,236 | INFO | order_pipeline | orders Load Completed
+2026-04-13 22:22:27,236 | INFO | order_pipeline | Loaded 5 orders
+2026-04-13 22:22:27,236 | INFO | order_pipeline | order_items Load Started
+2026-04-13 22:22:27,237 | INFO | order_pipeline | order_items Load Completed
+2026-04-13 22:22:27,237 | INFO | order_pipeline | Loaded 5 order_items
+2026-04-13 22:22:27,239 | INFO | order_pipeline | Pipeline Completed
+```
+
