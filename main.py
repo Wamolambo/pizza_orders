@@ -40,7 +40,7 @@ if __name__=="__main__":
         # Initialise database
         logger.info("Initialising tables")
         create_tables()
-        logger.info("Table Succesfuly Initialised")
+        logger.info("Table Successfully Initialised")
     if sys.argv[1] == "run":
         logger.info("Pipeline Started")
         
